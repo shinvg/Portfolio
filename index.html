@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaurav's Weather Webapp</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="card">
+        <div class="search">
+            <input type="text" class="searchbar" placeholder="enter city name" spellcheck="false">
+            <button><img src="images/search.png" alt="search"></button>
+        </div>
+        <div class="weather">
+            <img src="images/rain.png" class="weather-icon" alt="rainimage">
+            <h1 class="temp">22c</h1>
+            <h1 class="city">New Delhi</h1>
+        </div>
+    </div>
+    <script>
+        const apikey = "e70fac2580220f7d99eb707ef1a294aa";
+        const apiurl = 
+    "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+    const searchbox = document.querySelector(".search input");
+    const searchbtn  = document.querySelector(".search button");
+    async function checkWeather(city){
+        const response = await fetch(apiurl + city + `&appid=${apikey}`);
+        var data = await response.json();
+        console.log(data);
+        document.querySelector(".city").innerHTML = data.name;
+        document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "^C";
+    }
+    searchbtn.addEventListener("click",() => {
+        checkWeather(searchbox.value);
+    })
+    </script>
+</body>
+</html>
